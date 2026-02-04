@@ -7,7 +7,7 @@ export default defineConfig({
   reporter: [['html', { open: 'never', outputFolder: 'playwright-report' }]], 
   use: {
     baseURL: 'https://www.saucedemo.com',
-    storageState: 'auth/authState.json', 
+    storageState: './auth/authState.json', // Nokta ve eğik çizgi ekledik
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',
   },
