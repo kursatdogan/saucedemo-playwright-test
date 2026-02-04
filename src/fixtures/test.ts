@@ -1,19 +1,25 @@
-import { test as base, expect } from '@playwright/test';
-import * as fs from 'fs';
-import * as path from 'path';
+import { chromium } from '@playwright/test';
+import fs from 'fs';
+import path from 'path';
 
-export const test = base.extend({
-  context: async ({ browser }, use) => {
+async function setup() {
+  const browser = await chromium.launch();
+  const context = await browser.newContext();
+  const page = await context.newPage();
 
-    const storagePath = path.join(process.cwd(), 'auth', 'auth.json');
+  await page.goto('https://www.saucedemo.com');
+  await page.fill('#user-name', 'standard_user');
+  await page.fill('#password', 'secret_sauce');
+  await page.click('#login-button');
 
-    const context = fs.existsSync(storagePath)
-      ? await browser.newContext({ storageState: storagePath })
-      : await browser.newContext();
+  // KLASÖRÜN VARLIĞINDAN EMİN OLALIM
+  const authDir = path.join(process.cwd(), 'auth');
+  if (!fs.existsSync(authDir)) {
+    fs.mkdirSync(authDir);
+  }
 
-    await use(context);
-    await context.close();
-  },
-});
+  await page.context().storageState({ path: 'auth/authState.json' });
+  await browser.close();
+}
 
-export { expect };
+setup();
