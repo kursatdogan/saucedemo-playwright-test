@@ -1,0 +1,21 @@
+{
+  "name": "soucedemo_playwright_qa",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "auth:generate": "ts-node src/auth/setup.ts",
+    "report": "playwright show-report"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@faker-js/faker": "^10.2.0",
+    "@playwright/test": "^1.58.1",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.3.3"
+  }
+}
