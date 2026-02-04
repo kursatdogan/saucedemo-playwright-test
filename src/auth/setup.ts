@@ -17,7 +17,6 @@ async function run() {
   await page.click('input[data-test="login-button"]');
   await page.waitForURL('**/inventory.html');
 
-  // Kritik: Verilerin storage'a tam yerleşmesi için 1 saniye bekle
   await page.waitForTimeout(1000);
 
   const storage = await context.storageState();

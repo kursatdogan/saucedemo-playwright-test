@@ -20,7 +20,6 @@ jobs:
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
 
-    # ÖNEMLİ: GitHub üzerinde auth.json dosyasını oluşturur
     - name: Run Auth Setup
       run: npx ts-node src/auth/setup.ts
 
@@ -31,5 +30,5 @@ jobs:
       if: always()
       with:
         name: playwright-report
-        path: playwright-report/ # Config'deki outputFolder ile aynı olmalı
+        path: playwright-report/ 
         retention-days: 30
