@@ -13,18 +13,16 @@ export default defineConfig({
     {
       name: 'setup',
       testMatch: 'auth.setup.ts',
-      // Bu proje test raporlarında kalabalık yapmaz
       teardown: undefined, 
     },
     {
       name: 'chromium',
       use: { 
         baseURL: 'https://www.saucedemo.com',
-        trace: 'on-first-retry', // Sadece hata aldığında trace kaydeder (dosya boyutunu küçültür)
-        screenshot: 'only-on-failure', // Sadece hata anında ekran görüntüsü alır
-        video: 'retain-on-failure', // Sadece hata anında video kaydeder
+        trace: 'on-first-retry', 
+        screenshot: 'only-on-failure', 
+        video: 'retain-on-failure', 
       },
-      // BURASI ÇOK ÖNEMLİ: Setup bitmeden bu projeyi başlatma
       dependencies: ['setup'],
     },
   ],

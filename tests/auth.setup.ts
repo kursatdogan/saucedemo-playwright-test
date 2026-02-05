@@ -2,7 +2,6 @@ import { test as setup } from '@playwright/test';
 import * as fs from 'fs';
 import * as path from 'path';
 
-// Bu satır setup'ın boş başlamasını sağlar
 setup.use({ storageState: { cookies: [], origins: [] } }); 
 
 const authFile = path.join(process.cwd(), 'auth', 'authState.json');
