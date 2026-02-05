@@ -21,7 +21,7 @@ jobs:
       run: npx playwright install --with-deps
 
     - name: Run Auth Setup
-      run: npx ts-node src/auth/auth.setup.ts
+      run: npx ts-node ./src/auth/auth.setup.ts
 
     - name: Run Playwright tests
       run: npx playwright test
