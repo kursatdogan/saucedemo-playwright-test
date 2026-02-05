@@ -19,12 +19,14 @@ export default defineConfig({
     {
       name: 'chromium',
       use: { 
-        ...devices['Desktop Chrome'],
-        // BURASI ÇOK ÖNEMLİ: Ana test bu dosyayı okuyarak açılmalı
-        storageState: authFile, 
+        baseURL: 'https://www.saucedemo.com',
+        trace: 'on-first-retry', // Sadece hata aldığında trace kaydeder (dosya boyutunu küçültür)
+        screenshot: 'only-on-failure', // Sadece hata anında ekran görüntüsü alır
+        video: 'retain-on-failure', // Sadece hata anında video kaydeder
       },
       // BURASI ÇOK ÖNEMLİ: Setup bitmeden bu projeyi başlatma
       dependencies: ['setup'],
     },
   ],
+  reporter: [['html', { open: 'never' }]],
 });
