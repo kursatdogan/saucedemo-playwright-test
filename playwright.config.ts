@@ -1,17 +1,19 @@
-﻿import { defineConfig } from '@playwright/test';
+﻿import { defineConfig, devices } from '@playwright/test';
 
 export default defineConfig({
   testDir: './tests',
-  timeout: 30_000,
-  expect: { timeout: 5_000 },
-  reporter: [['html', { open: 'never', outputFolder: 'playwright-report' }]], 
+  timeout: 30000,
+  reporter: 'html',
   use: {
     baseURL: 'https://www.saucedemo.com',
-    storageState: './auth/authState.json', // Nokta ve eğik çizgi ekledik
+    storageState: './auth/authState.json',
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',
   },
   projects: [
-    { name: 'chromium', use: { browserName: 'chromium' } },
+    {
+      name: 'chromium',
+      use: { ...devices['Desktop Chrome'] },
+    },
   ],
 });
