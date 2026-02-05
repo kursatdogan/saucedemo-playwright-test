@@ -3,33 +3,34 @@ on:
   push:
     branches: [ main, master ]
   pull_request:
-    branches: [ main, master ]
+    branches: [ main, master ] # PR açtığında da çalışması iyidir
+
 jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
+    
     - uses: actions/setup-node@v4
       with:
         node-version: 20
+        cache: 'npm' # Bağımlılıkları önbelleğe alarak hızlandırır
 
     - name: Install dependencies
-      run: npm install
+      run: npm ci # 'install' yerine 'ci' daha temiz kurulum sağlar
 
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
 
-    - name: Run Auth Setup
-      # ts-node yerine doğrudan playwright kullanarak çalıştırıyoruz
-      run: npx playwright test src/auth/auth.setup.ts
-
     - name: Run Playwright tests
-      run: npx playwright test
+      # Projeyi belirtiyoruz, bağımlılık (setup) otomatik tetiklenecek
+      run: npx playwright test --project=chromium
 
-    - uses: actions/upload-artifact@v4
-      if: always()
+    - name: Upload Report
+      uses: actions/upload-artifact@v4
+      if: always() # Test fail olsa bile raporu yükler
       with:
         name: playwright-report
-        path: playwright-report/ 
+        path: playwright-report/
         retention-days: 30

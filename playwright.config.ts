@@ -1,19 +1,30 @@
 ﻿import { defineConfig, devices } from '@playwright/test';
+import * as path from 'path';
+
+const authFile = path.join(process.cwd(), 'auth', 'authState.json');
 
 export default defineConfig({
   testDir: './tests',
-  timeout: 30000,
-  reporter: 'html',
   use: {
     baseURL: 'https://www.saucedemo.com',
-    storageState: './auth/authState.json',
-    screenshot: 'only-on-failure',
-    video: 'retain-on-failure',
+    trace: 'on',
   },
   projects: [
     {
+      name: 'setup',
+      testMatch: 'auth.setup.ts',
+      // Bu proje test raporlarında kalabalık yapmaz
+      teardown: undefined, 
+    },
+    {
       name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
+      use: { 
+        ...devices['Desktop Chrome'],
+        // BURASI ÇOK ÖNEMLİ: Ana test bu dosyayı okuyarak açılmalı
+        storageState: authFile, 
+      },
+      // BURASI ÇOK ÖNEMLİ: Setup bitmeden bu projeyi başlatma
+      dependencies: ['setup'],
     },
   ],
 });
